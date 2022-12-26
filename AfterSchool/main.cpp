@@ -5,7 +5,7 @@
 
 using namespace sf;
 
-int main(void) 
+int main(void)
 {
 	//윈도창 생성
 	RenderWindow window(VideoMode(640, 480), "AfterSchool");
@@ -27,7 +27,7 @@ int main(void)
 		enemy[i].setSize(Vector2f(70, 70));
 		enemy[i].setFillColor(Color::Yellow);
 		enemy_life[i] = 1;
-		enemy[i].setPosition(rand()%300+300, rand()%380);
+		enemy[i].setPosition(rand() % 300 + 300, rand() % 380);
 	}
 
 
@@ -35,16 +35,17 @@ int main(void)
 	while (window.isOpen())
 	{
 		Event event;
-		while (window.pollEvent(event)) 
+		while (window.pollEvent(event))
 		{
 			switch (event.type)
 			{
 				//종류(x) 버튼을 누르면 Event::Closed(0)
 			case Event::Closed:
-					window.close();		//윈도를 닫는다
+				window.close();		//윈도를 닫는다
 			}
 		}
 
+		//방향키 start
 		if (Keyboard::isKeyPressed(Keyboard::Left))
 		{
 			player.move(-player_speed, 0);
@@ -60,7 +61,21 @@ int main(void)
 		if (Keyboard::isKeyPressed(Keyboard::Down))
 		{
 			player.move(0, player_speed);
+		} //방향키 end
+
+		//스페이스 키 누르면 모든 enemy 출현
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				enemy[i].setSize(Vector2f(70, 70));
+				enemy[i].setFillColor(Color::Yellow);
+				enemy_life[i] = 1;
+				enemy[i].setPosition(rand() % 300 + 300, rand() % 380);
+			}
+
 		}
+	
 
 		//enemy와의 충돌
 		for (int i = 0; i < 5; i++)
