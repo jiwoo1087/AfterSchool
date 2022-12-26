@@ -14,9 +14,12 @@ int main(void)
 		Event event;
 		while (window.pollEvent(event)) 
 		{
-			//종류(x) 버튼을 누르면 
-			if (event.type == Event::Closed)
-				window.close();		//윈도를 닫는다
+			switch (event.type)
+			{
+				//종류(x) 버튼을 누르면 Event::Closed(0)
+			case Event::Closed:
+					window.close();		//윈도를 닫는다
+			}
 		}
 	}
 	
