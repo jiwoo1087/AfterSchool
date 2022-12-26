@@ -46,9 +46,10 @@ int main(void)
 			player.move(0, 1);
 		}
 
-
+		window.clear(Color::Black);
 
 		window.draw(player);
+
 		window.display();
 	}
 	
