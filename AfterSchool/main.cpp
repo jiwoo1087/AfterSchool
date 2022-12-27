@@ -6,6 +6,14 @@
 
 using namespace sf;
 
+struct Player
+{
+	RectangleShape sprite;
+	int speed;
+	int score;
+
+};
+
 int main(void)
 {
 	//윈도창 생성
@@ -39,12 +47,13 @@ int main(void)
 	
 	
 	//플레이어
-	RectangleShape player;
-	player.setSize(Vector2f(40, 40));
-	player.setPosition(100, 100);
-	player.setFillColor(Color::Red);
-	int player_speed = 7;
-	int player_score = 0;
+	RectangleShape sprite;
+	struct Player player;
+	player.sprite.setSize(Vector2f(40, 40));
+	player.sprite.setPosition(100, 100);
+	player.sprite.setFillColor(Color::Red);
+	player.speed = 7;
+	player.score = 0;
 
 	//적
 	const int ENEMY_NUM = 100;
@@ -106,19 +115,19 @@ int main(void)
 		//방향키 start
 		if (Keyboard::isKeyPressed(Keyboard::Left))
 		{
-			player.move(-player_speed, 0);
+			player.sprite.move(-player.speed, 0);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Right))
 		{
-			player.move(player_speed, 0);
+			player.sprite.move(player.speed, 0);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Up))
 		{
-			player.move(0, -player_speed);
+			player.sprite.move(0, -player.speed);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Down))
 		{
-			player.move(0, player_speed);
+			player.sprite.move(0, player.speed);
 		} //방향키 end
 
 
@@ -126,11 +135,11 @@ int main(void)
 		for (int i = 0; i < ENEMY_NUM; i++)
 		{
 			if (enemy_life[i] > 0) {
-				if (player.getGlobalBounds().intersects(enemy[i].getGlobalBounds()))
+				if (sprite.getGlobalBounds().intersects(enemy[i].getGlobalBounds()))
 				{
 					printf("enemy%d과 충돌\n", i);
 					enemy_life[i] -= 1;
-					player_score += enemy_score;
+					player.score += enemy_score;
 
 					// TODO : 코드 
 					if (enemy_life[i] == 0)
@@ -144,7 +153,7 @@ int main(void)
 
 
 		sprintf(info, "score : %d time:%d"
-			, player_score, spent_time/1000);
+			, player.score, spent_time/1000);
 		text.setString(info);
 		
 
@@ -159,7 +168,7 @@ int main(void)
 				window.draw(enemy[i]);
 			}
 		}
-		window.draw(player);
+		window.draw(player.sprite);
 		window.draw(text);
 		
 
