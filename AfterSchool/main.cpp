@@ -13,6 +13,16 @@ int main(void)
 
 	srand(time(0));
 
+	Font font;
+	font.loadFromFile("C:\\Windows\\Fonts\\arial.ttf");
+
+	Text text;
+	text.setFont(font);
+	text.setCharacterSize(24);			//글자크기 조절
+	text.setFillColor(Color(255, 255, 255));
+	text.setPosition(0, 0);
+	text.setString("score");
+	
 
 	RectangleShape player;
 	player.setSize(Vector2f(40, 40));
@@ -112,6 +122,7 @@ int main(void)
 			}
 		}
 		window.draw(player);
+		window.draw(text);
 
 		window.display();
 	}
