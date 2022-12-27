@@ -29,6 +29,14 @@ int main(void)
 	text.setPosition(0, 0);
 	char info[40];
 	text.setString("score");
+
+	//배경
+	Texture bg_texture;
+	bg_texture.loadFromFile("./resources/image/background.jpg");
+	Sprite bg_sprite;
+	bg_sprite.setTexture(bg_texture);
+	bg_sprite.setPosition(0, 0);
+	
 	
 	//플레이어
 	RectangleShape player;
@@ -135,6 +143,7 @@ int main(void)
 		
 
 		window.clear(Color::Black);
+		window.draw(bg_sprite);
 
 		//draw는 나중에 호출할수록 우선순위가 높아짐
 		for (int i = 0; i < 5; i++)
@@ -146,6 +155,7 @@ int main(void)
 		}
 		window.draw(player);
 		window.draw(text);
+		
 
 		window.display();
 	}
