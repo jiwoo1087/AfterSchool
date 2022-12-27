@@ -18,9 +18,10 @@ int main(void)
 
 	Text text;
 	text.setFont(font);
-	text.setCharacterSize(24);			//글자크기 조절
+	text.setCharacterSize(24);	 //글자크기 조절
 	text.setFillColor(Color(255, 255, 255));
 	text.setPosition(0, 0);
+	char info[40];
 	text.setString("score");
 	
 
@@ -108,7 +109,9 @@ int main(void)
 			}
 		}
 
-		printf("score : %d\n", player_score);
+
+		sprintf(info, "score : %d\n", player_score);
+		text.setString(info);
 		
 
 		window.clear(Color::Black);
