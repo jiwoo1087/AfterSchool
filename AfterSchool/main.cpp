@@ -19,9 +19,11 @@ int main(void)
 	player.setPosition(100, 100);
 	player.setFillColor(Color::Red);
 	int player_speed = 5;
+	int player_score = 0;
 
 	RectangleShape enemy[5];
 	int enemy_life[5];
+	int enemy_score = 100;      //적을 잡을 때 얻는 점수
 	for (int i = 0; i < 5; i++)
 	{
 		enemy[i].setSize(Vector2f(70, 70));
@@ -91,9 +93,12 @@ int main(void)
 				{
 					printf("enemy%d과 충돌\n", i);
 					enemy_life[i] -= 1;
+					player_score += enemy_score;
 				}
 			}
 		}
+
+		printf("score : %d\n", player_score);
 		
 
 		window.clear(Color::Black);
