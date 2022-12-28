@@ -1,11 +1,11 @@
-#AfterSchool
-# ¹æ°úÈÄ ¼ö¾÷
+#AfterSchool<br>
+#ë°©ê³¼í›„ ìˆ˜ì—…<br>
 
-¸®¼Ò½º ÃâÃ³
+ë¦¬ì†ŒìŠ¤ ì¶œì²˜
 BGM :no-more-magic (CC-BY 3.0)<br>
 https://opengameart.org/content/no-more-magic
 
-Sound Effects :
+Sound Effects :<br>
 1: rumbleexplosion (CC-BY 3.0)<br>
 https://opengameart.org/content/rumbleexplosion
 
