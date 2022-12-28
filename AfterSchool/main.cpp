@@ -11,7 +11,17 @@ struct Player {
 	int speed;
 	int score;
 	int life;
+	float x, y;		//플레이어 좌표
 };
+
+//총알
+struct Bullet
+{
+	RectangleShape sprite;
+	int speed;
+	int is_fired;		//발사 여부
+};
+
 
 struct Enemy {
 	RectangleShape sprite;
@@ -79,9 +89,18 @@ int main(void)
 	player.sprite.setSize(Vector2f(40, 40));
 	player.sprite.setPosition(100, 100);
 	player.sprite.setFillColor(Color::Red);
+	player.x = player.sprite.getPosition().x;
+	player.y = player.sprite.getPosition().y;
 	player.speed = 8;
 	player.score = 0;
 	player.life = 10;
+
+	//총알
+	struct Bullet bullet;
+	bullet.sprite.setSize(Vector2f(10, 10));
+	bullet.sprite.setPosition(player.x+50, player.y+15);		//임시 테스트
+	bullet.speed = 20;
+	bullet.is_fired = 0;
 
 	// 적(enemy)
 	struct Enemy enemy[ENEMY_NUM];
@@ -210,6 +229,7 @@ int main(void)
 				window.draw(enemy[i].sprite);
 		window.draw(player.sprite);
 		window.draw(text);
+		window.draw(bullet.sprite);
 
 		if (is_gameover)
 		{
