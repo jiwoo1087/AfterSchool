@@ -135,24 +135,26 @@ int main(void)
 				// 키보드를 눌렀을 때(누른 순간만을 감지)
 			case Event::KeyPressed:
 			{
-				// 스페이스 키 누르면 모든 enemy 다시 출현
-				if (event.key.code == Keyboard::Space)
-				{
-					for (int i = 0; i < ENEMY_NUM; i++)
-					{
-						enemy[i].sprite.setSize(Vector2f(70, 70));
-						enemy[i].sprite.setFillColor(Color::Yellow);
-						enemy[i].sprite.setPosition(rand() % 300 + W_WIDTH, rand() % 380);
-						enemy[i].life = 1;
-						enemy[i].speed = -(rand() % 10 + 1);
-					}
-				}
+				//// 스페이스 키 누르면 모든 enemy 다시 출현
+				//if (event.key.code == Keyboard::Space)
+				//{
+				//	for (int i = 0; i < ENEMY_NUM; i++)
+				//	{
+				//		enemy[i].sprite.setSize(Vector2f(70, 70));
+				//		enemy[i].sprite.setFillColor(Color::Yellow);
+				//		enemy[i].sprite.setPosition(rand() % 300 + W_WIDTH, rand() % 380);
+				//		enemy[i].life = 1;
+				//		enemy[i].speed = -(rand() % 10 + 1);
+				//	}
+				//}
 				break;
 			}
 			}
 		}
 
 		spent_time = clock() - start_time;
+		player.x = player.sprite.getPosition().x;
+		player.y = player.sprite.getPosition().y;
 
 		// 방향키 start
 		if (Keyboard::isKeyPressed(Keyboard::Left))
@@ -171,7 +173,17 @@ int main(void)
 		{
 			player.sprite.move(0, player.speed);
 		}	// 방향키 end
-
+		
+		//총알 발사
+		if (Keyboard::isKeyPressed(Keyboard::Space))
+		{
+			//총알이 발사되어있지 않다면
+			if (!bullet.is_fired)
+			{
+				bullet.sprite.setPosition(player.x + 50, player.y + 15);
+				bullet.is_fired = 1;
+			}
+		}
 
 		for (int i = 0; i < ENEMY_NUM; i++)
 		{
@@ -211,6 +223,11 @@ int main(void)
 			}
 		}
 
+		if (bullet.is_fired)
+		{
+			bullet.sprite.move(bullet.speed, 0);
+		}
+
 		if (player.life <= 0)
 		{
 			is_gameover = 1;
@@ -229,6 +246,10 @@ int main(void)
 				window.draw(enemy[i].sprite);
 		window.draw(player.sprite);
 		window.draw(text);
+		if (bullet.is_fired)
+		{
+			window.draw(bullet.sprite);
+		}
 		window.draw(bullet.sprite);
 
 		if (is_gameover)
