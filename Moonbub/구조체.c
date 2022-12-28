@@ -15,7 +15,7 @@ int main(void)
 	enemy.hp = 2;
 	enemy.speed = 5;
 
-	printf("플레이어 체력%d 플레이어 속도%d\n", player_hp, player_speed);
+	printf("플레이어 체력%d 플레이어 속도%d\n", player.hp, player.speed);
 
 	return 0;
 
