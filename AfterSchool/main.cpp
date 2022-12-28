@@ -12,6 +12,7 @@ struct Player {
 	int score;
 	int life;
 };
+
 struct Enemy {
 	RectangleShape sprite;
 	int speed;
@@ -40,6 +41,14 @@ int main(void)
 	long spent_time;			// 게임 진행시간
 	int is_gameover = 0;
 
+	//BGM
+	SoundBuffer BGM_buffer;
+	BGM_buffer.loadFromFile("./resources/sound/BGM.wav");
+	Sound BGM_sound;
+	BGM_sound.setBuffer(BGM_buffer);
+	BGM_sound.setLoop(1);		//BGM 무한반복
+	BGM_sound.play();
+
 	// text
 	Font font;
 	font.loadFromFile("C:\\Windows\\Fonts\\arial.ttf");
@@ -50,6 +59,7 @@ int main(void)
 	text.setFillColor(Color(255, 255, 255));
 	text.setPosition(0, 0);
 	char info[40];
+
 	// 배경
 	Texture bg_texture;
 	bg_texture.loadFromFile("./resources/image/background.jpg");
@@ -69,7 +79,7 @@ int main(void)
 	player.sprite.setSize(Vector2f(40, 40));
 	player.sprite.setPosition(100, 100);
 	player.sprite.setFillColor(Color::Red);
-	player.speed = 5;
+	player.speed = 8;
 	player.score = 0;
 	player.life = 10;
 
@@ -80,7 +90,7 @@ int main(void)
 	for (int i = 0; i < ENEMY_NUM; i++)
 	{
 		// TODO : 굉장히 비효율적인 코드이므로 나중에 refactoring
-		enemy[i].explosion_buffer.loadFromFile("./resources/sounds/rumble.flac");
+		enemy[i].explosion_buffer.loadFromFile("./resources/sound/rumble.flac");
 		enemy[i].explosion_sound.setBuffer(enemy[i].explosion_buffer);
 		enemy[i].score = 100;
 		enemy[i].respawn_time = 8;
