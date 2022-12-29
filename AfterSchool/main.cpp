@@ -37,9 +37,9 @@ struct Enemy {
 	int speed;
 	int life;
 	int score;
-	int respawn_time;
 	SoundBuffer explosion_buffer;
 	Sound explosion_sound;
+	int respawn_time;
 };
 
 struct Textures
@@ -79,6 +79,7 @@ int main(void)
 
 	long start_time = clock();	// 게임 시작시간
 	long spent_time;			// 게임 진행시간
+	long fired_time = 0;				// 최근에 발사한 시간
 	int is_gameover = 0;
 
 	//BGM
@@ -124,6 +125,7 @@ int main(void)
 	//총알
 	int bullet_speed = 20;
 	int bullet_index = 0;
+	int bullet_delay = 500;		//딜레이 0.5초
 
 	struct Bullet bullet[BULLET_NUM];
 
@@ -147,7 +149,7 @@ int main(void)
 		enemy[i].explosion_sound.setBuffer(enemy[i].explosion_buffer);
 		enemy[i].score = 100;
 		enemy[i].respawn_time = 8;
-		enemy[i].sprite.setSize(Vector2f(80, 40));
+		enemy[i].sprite.setSize(Vector2f(80, 50));
 		enemy[i].sprite.setPosition(rand() % 300 + W_WIDTH*0.9, rand() % 380);
 		enemy[i].life = 1;
 		enemy[i].speed = -(rand() % 10 + 1);
@@ -232,15 +234,20 @@ int main(void)
 		printf("bullet_idx %d\n", bullet_index);
 		if (Keyboard::isKeyPressed(Keyboard::Space))
 		{
-			//총알이 발사되어있지 않다면
-			if (!bullet[bullet_index].is_fired)
+			if (spent_time-fired_time > bullet_delay)
 			{
-				bullet[bullet_index].sprite.setPosition(player.x + 50, player.y + 15);
-				bullet[bullet_index].is_fired = 1;
-				bullet_index++;		//다음총알이 발사할 수 있도록
+				//총알이 발사되어있지 않다면
+				if (!bullet[bullet_index].is_fired)
+				{
+					bullet[bullet_index].sprite.setPosition(player.x + 50, player.y + 15);
+					bullet[bullet_index].is_fired = 1;
+					bullet_index++;		//다음총알이 발사할 수 있도록
+					fired_time = spent_time;
+				}
 			}
 		}
-		for (int i = 0; i < BULLET_NUM; i++) {
+		for (int i = 0; i < BULLET_NUM; i++) 
+		{
 			if (bullet[i].is_fired)
 			{
 				bullet[i].sprite.move(bullet_speed, 0);
@@ -258,7 +265,7 @@ int main(void)
 			//  10초마다 enemy가 젠
 			if (spent_time % (1000*enemy[i].respawn_time) < 1000/60+1)
 				{
-					enemy[i].sprite.setSize(Vector2f(80, 40));
+					enemy[i].sprite.setSize(Vector2f(80, 50));
 					enemy[i].sprite.setPosition(rand() % 300 + W_WIDTH, rand() % 380);
 					enemy[i].life = 1;
 					// 10초마다 enemy의 속도+1
