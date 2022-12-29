@@ -43,6 +43,14 @@ struct Enemy {
 	int respawn_time;
 };
 
+struct Item
+{
+	RectangleShape sprite;
+	int delay;
+	int is_presented;		//아이템이 떳는지?
+
+};
+
 struct Textures
 {
 	Texture bg;			//배경 이미지
@@ -50,6 +58,8 @@ struct Textures
 	Texture player;		//플레이어 이미지
 	Texture enemy;		//적 이미지
 	Texture bullet;		//총알 이미지
+	Texture item_delay; //공속 아이템 이미지
+	Texture item_speed; //이속 아이템 이미지
 };
 
 // obj1과 obj2의 충돌여부. 충돌하면 1 반환, 충돌 안하면 0을 반환
@@ -74,6 +84,8 @@ int main(void)
 	t.player.loadFromFile("./resources/image/player.png");
 	t.enemy.loadFromFile("./resources/image/enemy.png");
 	t.bullet.loadFromFile("./resources/image/bullet.png");
+	t.item_delay.loadFromFile("./resources/image/item_delay.png");
+	t.item_speed.loadFromFile("./resources/image/item_speed.png");
 	
 	// 윈도창 생성
 	RenderWindow window(VideoMode(W_WIDTH, W_HEIGHT), "AfterSchool");
@@ -157,6 +169,13 @@ int main(void)
 		enemy[i].life = 1;
 		enemy[i].speed = -(rand() % 10 + 1);
 	}
+
+	//item
+	struct Item item[2];
+	item[0].sprite.setTexture(&t.item_speed);
+	item[0].delay = 25000;		//25초
+	item[0].sprite.setSize(Vector2f(50, 50));
+	item[0].is_presented = 1;
 
 	// 윈도가 열려있을 때까지 반복
 	while (window.isOpen())
@@ -322,6 +341,12 @@ int main(void)
 			enemy[i].sprite.move(enemy[i].speed, 0);
 		}
 
+		//item update
+		if (item[0].is_presented)
+		{
+			// TODO : 충돌시 아이템 효과를 주고 사라진다.
+		}
+
 
 		sprintf(info, "life:%d score:%d time:%d"
 			, player.life, player.score, spent_time / 1000);
@@ -333,6 +358,8 @@ int main(void)
 		for (int i = 0; i < ENEMY_NUM; i++)
 			if (enemy[i].life > 0)
 				window.draw(enemy[i].sprite);
+		if (item[0].is_presented)
+			window.draw(item[0].sprite);
 
 		window.draw(player.sprite);
 		window.draw(text);
