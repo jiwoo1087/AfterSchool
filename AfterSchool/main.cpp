@@ -228,8 +228,8 @@ int main(void)
 			player.sprite.setPosition(player.x, W_HEIGHT-170);
 
 		/*Bullet update*/
-		//총알 발사 TODO : 50개 이후부터는 안나가는 버그 수정할 것
-		printf("bullet_idx %d\n", bullet_index)
+		//총알 발사 TODO : 총알이 50개 이후는 안 나가는 것 수정
+		printf("bullet_idx %d\n", bullet_index);
 		if (Keyboard::isKeyPressed(Keyboard::Space))
 		{
 			//총알이 발사되어있지 않다면
