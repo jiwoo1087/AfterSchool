@@ -4,6 +4,7 @@ TODO list
 1) 아이템 : 속도증가 , 데미지 증가
 2) 총알 시스템 개편
 3) sond effet
+
 */
 
 
@@ -48,6 +49,7 @@ struct Textures
 	Texture gameover;   //게임오버 이미지
 	Texture player;		//플레이어 이미지
 	Texture enemy;		//적 이미지
+	Texture bullet;		//총알 이미지
 };
 
 // obj1과 obj2의 충돌여부. 충돌하면 1 반환, 충돌 안하면 0을 반환
@@ -71,6 +73,7 @@ int main(void)
 	t.gameover.loadFromFile("./resources/image/gameover.png");
 	t.player.loadFromFile("./resources/image/player.png");
 	t.enemy.loadFromFile("./resources/image/enemy.png");
+	t.bullet.loadFromFile("./resources/image/bullet.png");
 	
 	// 윈도창 생성
 	RenderWindow window(VideoMode(W_WIDTH, W_HEIGHT), "AfterSchool");
@@ -79,7 +82,7 @@ int main(void)
 
 	long start_time = clock();	// 게임 시작시간
 	long spent_time;			// 게임 진행시간
-	long fired_time = 0;				// 최근에 발사한 시간
+	long fired_time = 0;		// 최근에 발사한 시간
 	int is_gameover = 0;
 
 	//BGM
@@ -123,7 +126,7 @@ int main(void)
 	player.life = 10;
 
 	//총알
-	int bullet_speed = 20;
+	int bullet_speed = 50;
 	int bullet_index = 0;
 	int bullet_delay = 500;		//딜레이 0.5초
 
@@ -230,7 +233,7 @@ int main(void)
 			player.sprite.setPosition(player.x, W_HEIGHT-170);
 
 		/*Bullet update*/
-		//총알 발사 TODO : 총알이 50개 이후는 안 나가는 것 수정
+		//총알 발사
 		printf("bullet_idx %d\n", bullet_index);
 		if (Keyboard::isKeyPressed(Keyboard::Space))
 		{
@@ -242,6 +245,7 @@ int main(void)
 					bullet[bullet_index].sprite.setPosition(player.x + 50, player.y + 15);
 					bullet[bullet_index].is_fired = 1;
 					bullet_index++;		//다음총알이 발사할 수 있도록
+					bullet_index = bullet_index % BULLET_NUM;
 					fired_time = spent_time;
 				}
 			}
