@@ -92,7 +92,7 @@ int main(void)
 	// BGM
 	Sound BGM_sound;
 	BGM_sound.setBuffer(sb.BGM);
-	BGM_sound.setVolume(80);
+	BGM_sound.setVolume(100);
 	BGM_sound.setLoop(1);		// BGM 무한반복
 	BGM_sound.play();
 
@@ -329,7 +329,6 @@ int main(void)
 			}
 		}
 
-		// item update TODO : item[1]이 안뜸
 		for (int i = 0; i < ITEM_NUM; i++)
 		{
 			if (!item[i].is_presented)
@@ -358,8 +357,11 @@ int main(void)
 		for (int i = 0; i < ENEMY_NUM; i++)
 			if (enemy[i].life > 0)
 				window.draw(enemy[i].sprite);
-		if (item[0].is_presented)
-			window.draw(item[0].sprite);
+		for (int i = 0; i < ITEM_NUM; i++)
+		{
+			if (item[i].is_presented)
+				window.draw(item[i].sprite);
+		}
 
 		window.draw(player.sprite);
 		window.draw(text);
