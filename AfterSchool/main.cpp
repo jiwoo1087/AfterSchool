@@ -18,6 +18,7 @@ using namespace sf;
 struct Player {
 	RectangleShape sprite;
 	int speed;
+	int speed_max;
 	int score;
 	int life;
 	float x, y;		// 플레이어 좌표
@@ -32,12 +33,19 @@ struct Enemy {
 	int speed;
 	int life;
 };
+
+enum item_type {
+	SPEED,		//0
+	DELAY		//1
+};
+
+
 struct Item {
 	RectangleShape sprite;
 	int delay;
 	int is_presented;		// 아이템이 떳는지?
 	long presented_time;
-	int type;
+	enum item_type type;
 };
 
 struct Textures {
@@ -126,6 +134,7 @@ int main(void)
 	player.x = player.sprite.getPosition().x;
 	player.y = player.sprite.getPosition().y;
 	player.speed = 5;
+	player.speed_max = 15;
 	player.score = 0;
 	player.life = 10;
 
@@ -133,6 +142,7 @@ int main(void)
 	int bullet_speed = 20;
 	int bullet_idx = 0;
 	int bullet_delay = 500;		// 딜레이 0.5초
+	int bullet_delay_max = 100;
 	Sound bullet_sound;
 	bullet_sound.setBuffer(sb.rumble);
 	struct Bullet bullet[BULLET_NUM];
@@ -164,10 +174,10 @@ int main(void)
 	struct Item item[ITEM_NUM];
 	item[0].sprite.setTexture(&t.item_speed);
 	item[0].delay = 25000;	// 25초
-	item[0].type = 0;
+	item[0].type = SPEED;
 	item[1].sprite.setTexture(&t.item_delay);
 	item[1].delay = 20000;
-	item[1].type = 1;
+	item[1].type = DELAY;
 
 	for (int i = 0; i < ITEM_NUM; i++)
 	{
@@ -349,11 +359,16 @@ int main(void)
 				{
 					switch (item[i].type)
 					{
-					case 0: //player 이동속도
+					case SPEED: //player 이동속도
 						player.speed += 2;
+						if (player.speed > player.speed_max)
+							player.speed = player.speed_max;
 						break;
-					case 1: //player 공격속도
+					case DELAY: //player 공격속도
 						bullet_delay -= 100;
+
+						if (bullet_delay < bullet_delay_max)
+							bullet_delay = bullet_delay_max;
 						break;
 					}
 					item[i].is_presented = 0;
