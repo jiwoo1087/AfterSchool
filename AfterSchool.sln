@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AfterSchool2", "AfterSchool2\AfterSchool2.vcxproj", "{222872B5-B9DC-4530-86CC-B95548148DDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -36,6 +38,14 @@ Global
 		{81EBB28E-7518-4D1E-AC88-658B23E3FFBF}.Release|x64.Build.0 = Release|x64
 		{81EBB28E-7518-4D1E-AC88-658B23E3FFBF}.Release|x86.ActiveCfg = Release|Win32
 		{81EBB28E-7518-4D1E-AC88-658B23E3FFBF}.Release|x86.Build.0 = Release|Win32
+		{222872B5-B9DC-4530-86CC-B95548148DDA}.Debug|x64.ActiveCfg = Debug|x64
+		{222872B5-B9DC-4530-86CC-B95548148DDA}.Debug|x64.Build.0 = Debug|x64
+		{222872B5-B9DC-4530-86CC-B95548148DDA}.Debug|x86.ActiveCfg = Debug|Win32
+		{222872B5-B9DC-4530-86CC-B95548148DDA}.Debug|x86.Build.0 = Debug|Win32
+		{222872B5-B9DC-4530-86CC-B95548148DDA}.Release|x64.ActiveCfg = Release|x64
+		{222872B5-B9DC-4530-86CC-B95548148DDA}.Release|x64.Build.0 = Release|x64
+		{222872B5-B9DC-4530-86CC-B95548148DDA}.Release|x86.ActiveCfg = Release|Win32
+		{222872B5-B9DC-4530-86CC-B95548148DDA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
