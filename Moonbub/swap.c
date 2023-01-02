@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-// _a와 a, _b와 b는 전혀 상관없는 변수
-void swap(int _a, int _b)
+// _a, _b는 주소값, *_a, *_b는 가리키는 변수의 실제값(int)
+void swap(int* _a, int* _b)
 {
 	int temp;
-	temp = _a;
-	_a = _b;
-	_b = temp;
+	temp = *_a;
+	*_a = *_b;
+	*_b = temp;
 }
 
 int main(void)
@@ -18,7 +18,7 @@ int main(void)
 
 	// a와 b를 swap하는 함수를 호출
 
-	swap(a, b);
+	swap(&a, &b);		//_a에 a의 주소값을, _b에게 b의 주소값을 넘겨준다.
 
 	printf("a:%d b:%d \n", a, b);
 }
