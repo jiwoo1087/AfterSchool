@@ -16,7 +16,7 @@ void shuffle(int(* _arr)[4])
 	srand(time(0));
 	for (int i = 0; i < 100; i++)
 	{
-		swap(&(_arr[rand() % 4][rand() % 4]), & (_arr[rand() % 4][rand % 4]));
+		swap(&(_arr[rand() % 4][rand() % 4]), &(_arr[rand() % 4][rand() % 4]));
 	}
 }
 
