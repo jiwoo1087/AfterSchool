@@ -3,10 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 using namespace sf;
+
 const int S = 4;
 const int CARD_W = 200;
 const int CARD_H = 200;
+
 struct Card {
 	RectangleShape sprite;
 	int id_i;
@@ -25,7 +28,7 @@ void swap_card(struct Card* c1, struct Card* c2)
 
 int main(void)
 {
-	RenderWindow window(VideoMode(1200, 800), "AfterSchool2");
+	RenderWindow window(VideoMode(800, 800), "AfterSchool2");
 	window.setFramerateLimit(60);
 	Vector2i mouse_pos;
 	int flipped_num = 0;		// 현재 뒤집혀진 카드의 갯수
@@ -58,6 +61,7 @@ int main(void)
 	struct Card compare_card;	// 첫 번째로 뒤집힌 카드
 	struct Card cards[S][S];
 	int n = 0;
+
 	for (int i = 0; i < S; i++)
 	{
 		for (int j = 0; j < S; j++)
