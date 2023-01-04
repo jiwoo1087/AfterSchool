@@ -23,11 +23,13 @@ struct Player {
 	int life;
 	float x, y;		// 플레이어 좌표
 };
+
 // 총알
 struct Bullet {
 	RectangleShape sprite;
 	int is_fired;			// 발사 여부
 };
+
 struct Enemy {
 	RectangleShape sprite;
 	int speed;
