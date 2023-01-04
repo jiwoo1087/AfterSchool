@@ -17,7 +17,9 @@ int main(void)
 	window.setFramerateLimit(60);
 	long start_time;
 	long spent_time;
-	int gravity = 10; // 중력
+
+	const int GRAVITY = 10;		// 중력
+	const int PLATFORM_Y = 500;	// 땅바닥의 y좌표
 
 	Texture run[10];
 	run[0].loadFromFile("./animation/Run__000.png");
@@ -84,7 +86,15 @@ int main(void)
 			player.idx++;
 		}
 
-		player.sprite.move(0, gravity); // 중력이 작용한다
+		player.sprite.move(0, GRAVITY);		// 중력이 작용한다
+
+		// 플레이어가 땅바닥에 착지하면
+		if (player.sprite.getPosition().y + player.sprite.getSize().y > PLATFORM_Y)
+		{
+			// 더 이상 내려갈 수 없게 한다
+			player.sprite.setPosition(player.sprite.getPosition().x
+				, PLATFORM_Y - player.sprite.getSize().y);
+		}
 
 		window.clear(Color::Magenta);
 		window.draw(player.sprite);
