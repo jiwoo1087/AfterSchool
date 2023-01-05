@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <time.h>
+
 using namespace sf;
+
 struct Player {
 	RectangleShape sprite;
 

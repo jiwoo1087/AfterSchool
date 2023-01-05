@@ -65,6 +65,7 @@ const int GO_WIDTH = 320, GO_HEIGHT = 240;	// 게임오버 그림의 크기
 
 int main(void)
 {
+
 	struct Textures t;
 	t.bg.loadFromFile("./resources/image/background.jpg");
 	t.enemy.loadFromFile("./resources/image/enemy.png");
@@ -76,7 +77,7 @@ int main(void)
 	struct SButters sb;
 	sb.BGM.loadFromFile("./resources/sound/BGM.wav");
 	sb.rumble.loadFromFile("./resources/sound/rumble.wav");
-	sb.item_sound.loadFromFile("./resources/sound/item_sound.flac");
+	sb.item_sound.loadFromFile("./resources/sound/rumble.wav");
 
 	// 윈도창 생성
 	RenderWindow window(VideoMode(W_WIDTH, W_HEIGHT), "AfterSchool");
@@ -90,7 +91,7 @@ int main(void)
 	// BGM
 	Sound BGM_sound;
 	BGM_sound.setBuffer(sb.BGM);
-	BGM_sound.setVolume(100);
+	BGM_sound.setVolume(50);
 	BGM_sound.setLoop(1);		// BGM 무한반복
 	BGM_sound.play();
 
@@ -134,6 +135,7 @@ int main(void)
 	enemy_explosion_sound.setBuffer(sb.rumble);
 	int enemy_score = 100;
 	int enemy_respawn_time = 8;
+	int GRAVITY = 8;
 
 	// enemy 초기화
 	for (int i = 0; i < ENEMY_NUM; i++)
@@ -142,7 +144,7 @@ int main(void)
 		enemy[i].sprite.setSize(Vector2f(80, 80));
 		enemy[i].sprite.setPosition(rand() % 200 , rand() % 100);
 		enemy[i].life = 1;
-		enemy[i].speed = -(rand() % 10 + 1);
+		enemy[i].speed = 0;
 	}
 
 	// item
@@ -151,10 +153,12 @@ int main(void)
 	item[0].delay = 25000;	// 25초
 	item[0].type = SPEED;
 	item[0].sound.setBuffer(sb.item_sound);
+	item[0].sprite.move(0, GRAVITY);
 	item[1].sprite.setTexture(&t.item_delay);
 	item[1].delay = 20000;
 	item[1].type = DELAY;
 	item[1].sound.setBuffer(sb.item_sound);
+	item[1].sprite.move(0, GRAVITY);
 
 	for (int i = 0; i < ITEM_NUM; i++)
 	{
@@ -217,9 +221,13 @@ int main(void)
 			player.sprite.setPosition(player.x, W_HEIGHT - 170);
 
 
+		printf("spent_time:%d %% (1000 * enemy_respawn_time): %d = %d\n"
+			, spent_time, (1000 * enemy_respawn_time), spent_time % (1000 * enemy_respawn_time));
 		/* Enemy update */
+
 		for (int i = 0; i < ENEMY_NUM; i++)
 		{
+			
 			// 10초마다 enemy가 리스폰
 			if (spent_time % (1000 * enemy_respawn_time) < 1000 / 60 + 1)
 			{
@@ -227,12 +235,15 @@ int main(void)
 				if (!is_gameover)
 				{
 					enemy[i].sprite.setSize(Vector2f(80, 80));
-					enemy[i].sprite.setPosition(rand() % 200, rand() % 100);
+					enemy[i].sprite.setPosition(rand() % 500 , rand() % 10);
 					enemy[i].life = 1;
 					// 10초마다 enemy의 속도+1
-					enemy[i].speed = -(rand() % 10 + 1 + (spent_time / 1000 / enemy_respawn_time));
+					enemy[i].speed = (rand() % 1);
 				}
 			}
+			if (!is_gameover)
+				enemy[i].sprite.move(0, GRAVITY);		// 중력이 작용한다
+
 			if (enemy[i].life > 0)
 			{
 				// player, enemy 충돌
