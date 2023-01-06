@@ -70,7 +70,6 @@ int main(void)
 	t.bg.loadFromFile("./resources/image/background.jpg");
 	t.enemy.loadFromFile("./resources/image/enemy.png");
 	t.gameover.loadFromFile("./resources/image/gameover.png");
-	t.item_delay.loadFromFile("./resources/image/item_delay.png");
 	t.item_speed.loadFromFile("./resources/image/item_speed.png");
 	t.player.loadFromFile("./resources/image/player.png");
 
@@ -123,7 +122,7 @@ int main(void)
 	player.sprite.setSize(Vector2f(150, 150));
 	player.x = player.sprite.getPosition().x;
 	player.y = player.sprite.getPosition().y;
-	player.speed = 5;
+	player.speed = 7;
 	player.speed_max = 15;
 	player.score = 0;
 	player.life = 10;
@@ -135,14 +134,14 @@ int main(void)
 	enemy_explosion_sound.setBuffer(sb.rumble);
 	int enemy_score = 100;
 	int enemy_respawn_time = 8;
-	int GRAVITY = 8;
+	int GRAVITY = 5;
 
 	// enemy 초기화
 	for (int i = 0; i < ENEMY_NUM; i++)
 	{
 		enemy[i].sprite.setTexture(&t.enemy);
 		enemy[i].sprite.setSize(Vector2f(80, 80));
-		enemy[i].sprite.setPosition(rand() % 200 , rand() % 100);
+		enemy[i].sprite.setPosition(rand() % 200 , rand() % 10);
 		enemy[i].life = 1;
 		enemy[i].speed = 0;
 	}
@@ -221,8 +220,6 @@ int main(void)
 			player.sprite.setPosition(player.x, W_HEIGHT - 170);
 
 
-		printf("spent_time:%d %% (1000 * enemy_respawn_time): %d = %d\n"
-			, spent_time, (1000 * enemy_respawn_time), spent_time % (1000 * enemy_respawn_time));
 		/* Enemy update */
 
 		for (int i = 0; i < ENEMY_NUM; i++)
@@ -258,7 +255,7 @@ int main(void)
 					}
 				}
 				// 적이 왼쪽 끝에 진입하려는 순간
-				else if (enemy[i].sprite.getPosition().x < 0)
+				else if (enemy[i].sprite.getPosition().y > 800)
 				{
 					player.life -= 1;
 					enemy[i].life = 0;
@@ -281,6 +278,7 @@ int main(void)
 
 			if (item[i].is_presented)
 			{
+				item[0].sprite.move(0, GRAVITY);
 				//아이템 획득시 효과를 얻고 사라진다
 				if (is_collide(player.sprite, item[i].sprite))
 				{
